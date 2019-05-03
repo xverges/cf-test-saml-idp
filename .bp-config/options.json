@@ -3,7 +3,7 @@
   "PHP_EXTENSIONS": ["date", "dom", "hash", "libxml", "openssl", "pcre", "SPL", "zlib", "json", "mbstring", "session"],
   "WEBDIR": "simplesamlphp/www",
   "ADDITIONAL_PREPROCESS_CMDS": [
-    "echo INTALLING AND CUSTOMIZIN SIMPLESALPHP",
+    "echo INSTALLING AND CUSTOMIZING SIMPLESALPHP",
     "mv /home/vcap/app/simplesamlphp/www /home/vcap/app/ && mv /home/vcap/app/www/ /home/vcap/app/repo",
     "export SIMPLESAMLPHP_VERSION=1.16.3 && wget --output-document=/tmp/simplesamlphp.tar.gz https://github.com/simplesamlphp/simplesamlphp/releases/download/v${SIMPLESAMLPHP_VERSION}/simplesamlphp-${SIMPLESAMLPHP_VERSION}.tar.gz",
     "tar xzf /tmp/simplesamlphp.tar.gz -C /tmp && rm -f /tmp/simplesamlphp.tar.gz",
@@ -15,6 +15,7 @@
     "cp /home/vcap/app/repo/config/simplesamlphp/server.* /home/vcap/app/simplesamlphp/cert",
     "cp /home/vcap/app/repo/config/simplesamlphp/_include.php /home/vcap/app/simplesamlphp/www/simplesaml",
     "cp /home/vcap/app/repo/config/simplesamlphp/debug.php /home/vcap/app/simplesamlphp/www/index.php",
-    "touch /home/vcap/app/simplesamlphp/modules/exampleauth/enable"
+    "touch /home/vcap/app/simplesamlphp/modules/exampleauth/enable",
+    "[[ -n $SIMPLESAMLPHP_ALLOW_IN_IFRAME ]] && grep -v X-Frame-Options /home/vcap/app/simplesamlphp/templates/includes/header.php > /home/vcap/app/simplesamlphp/templates/includes/tmp && mv /home/vcap/app/simplesamlphp/templates/includes/tmp /home/vcap/app/simplesamlphp/templates/includes/header.php && echo 'iframe allowed'" 
   ]
 }

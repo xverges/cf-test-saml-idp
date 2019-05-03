@@ -45,6 +45,7 @@ applications:
                 "Another": "two"
             }
         }
+    SIMPLESAMLPHP_ALLOW_IN_IFRAME: TRUE
 
   routes:
     - route: cf-test-saml-idp.mybluemix.net
