@@ -1,0 +1,50 @@
+---
+applications:
+- name: cf-test-saml-idp
+  memory: 128MB
+  buildpack: https://github.com/cloudfoundry/php-buildpack.git#v4.3.71
+  env:
+    # Test your JSON! PHP won't forgive any extra commas... 
+    BP_DEBUG: FALSE
+    SIMPLESAMLPHP_ADMIN_PASSWORD: test
+    SIMPLESAMLPHP_SECRET_SALT: salt
+    SIMPLESAMLPHP_SP_METADATA: |
+        {
+            "passport-saml": {
+                "OrganizationName": "PassportJS SAML example",
+                "OrganizationURL": "https://github.com/gbraad/passport-saml-example",
+                "AssertionConsumerService": "http://localhost:3000/login/callback",
+                "SingleLogoutService": "http://localhost:3000/simplesaml/logout" 
+            },
+            "http://localhost:8888": {
+                "AssertionConsumerService": "http://localhost:8888/logon"
+            },
+            "https://cces-aca-chat-app.eu-de.mybluemix.net": {
+                "AssertionConsumerService": "https://cces-aca-chat-app.eu-de.mybluemix.net/logon"
+            },
+            "https://xv-test-chat-app.mybluemix.net": {
+                "AssertionConsumerService": "https://xv-test-chat-app.mybluemix.net/logon"
+            }
+        }
+    SIMPLESAMLPHP_USERS: |
+        {
+            "user1:user1pass": {
+                "email": "user1@yaml.com",
+                "UID": "us11111",
+                "Country code": "US",
+                "name": "Joe User",
+                "Telephone number": "555-11-11-11",
+                "Another": "one"
+            },
+            "user2:user2pass": {
+                "email": "user2@yaml.com",
+                "UID": "us22222",
+                "Country code": "44",
+                "name": "Jack User",
+                "Telephone number": "555-22-22-22",
+                "Another": "two"
+            }
+        }
+
+  routes:
+    - route: cf-test-saml-idp.mybluemix.net

@@ -4,6 +4,12 @@
  *
  */
 
+$baseurlpath = 'simplesaml/';
+if (getenv('VCAP_APPLICATION') != '') {
+    $vcap_application = json_decode(getenv('VCAP_APPLICATION'), TRUE);
+    $baseurlpath = 'https://' . $vcap_application['application_uris'][0] . ':443/simplesaml/';
+}
+
 $config = array(
 
     /**
@@ -21,7 +27,7 @@ $config = array(
      * external url, no matter where you come from (direct access or via the
      * reverse proxy).
      */
-    'baseurlpath' => 'simplesaml/',
+    'baseurlpath' => $baseurlpath,
     'certdir' => 'cert/',
     'loggingdir' => 'log/',
     'datadir' => 'data/',
